@@ -2,35 +2,41 @@ import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-        System.out.println("Введите два положительных натуральных числа");
-
-        Scanner scan1 = new Scanner(System.in);
-        int num1 = scan1.nextInt();
-
-        Scanner scan2 = new Scanner(System.in);
-        int num2 = scan2.nextInt();
-
-        if(num1 <= 0 || num2 <= 0) {
-            System.out.println("Ошибка! Можно ввести только положительные натуральные числа!");
-        }
-        else {
-            int d = nod(num1, num2);
-            System.out.println("НОД(" + num1 + ";" + num2 + ") = " + d);
-
-            int nok = num1 * num2 / d;
-            System.out.println("НОК(" + num1 + ";" + num2 + ") = " + nok);
+        for (;;) {
+            gcdAndLcm();
         }
     }
 
+    private static int scanInt() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
 
-    private static int nod(int a, int b) {
-        int r = Math.max(a, b) % Math.min(a, b);
+    private static int gcd(int a, int b) {
+        int min = Math.min(a, b);
+        int remainder = Math.max(a, b) % min;
 
-        if(r == 0) {
-            return Math.min(a, b);
+        if (remainder == 0) {
+            return min;
+        } else {
+            return gcd(min, remainder);
         }
-        else {
-            return nod(Math.min(a, b), r);
+    }
+
+    private static void gcdAndLcm() {
+        System.out.println("Enter 2 positive integer numbers...");
+
+        int num1 = scanInt();
+        int num2 = scanInt();
+
+        if (num1 <= 0 || num2 <= 0) {
+            System.out.println("Error - enter only positive integer numbers!\n");
+        } else {
+            int gcd = gcd(num1, num2);
+            System.out.println("GCD(" + num1 + ";" + num2 + ") = " + gcd);
+
+            int lcm = num1 * num2 / gcd;
+            System.out.println("LCM(" + num1 + ";" + num2 + ") = " + lcm + "\n");
         }
     }
 }
